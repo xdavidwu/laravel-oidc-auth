@@ -1,0 +1,20 @@
+{
+    "name": "xdavidwu/laravel-oidc-auth",
+    "description": "OpenID Connect auth provider for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "LaravelOIDCAuth\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "xdavidwu",
+            "email": "xdavidwuph@gmail.com"
+        }
+    ],
+    "require": {
+        "steverhoades/oauth2-openid-connect-client": "^0.4.0"
+    }
+}
