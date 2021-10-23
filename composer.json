@@ -15,6 +15,14 @@
         }
     ],
     "require": {
-        "steverhoades/oauth2-openid-connect-client": "^0.4.0"
+        "steverhoades/oauth2-openid-connect-client": "^0.4.0",
+        "laravel/framework": "^8.67"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelOIDCAuth\\OIDCAuthServiceProvider"
+            ]
+        }
     }
 }
