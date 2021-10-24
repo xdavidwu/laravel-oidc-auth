@@ -27,7 +27,9 @@ class CallbackController extends Controller
 
         session(['oidc-auth.access_token' => $token]);
 
-        Auth::login(new OIDCUser($token));
+        $factory = app(config('oidc-auth.authenticatable_factory'));
+
+        Auth::login($factory->authenticatable($token));
 
         return redirect()->intended();
     }

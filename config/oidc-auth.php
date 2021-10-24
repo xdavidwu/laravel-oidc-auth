@@ -32,4 +32,18 @@ return [
     |
      */
     'callback_route' => '/oidc/callback',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Authenticatable Factory
+    |--------------------------------------------------------------------------
+    |
+    | Factory to get a Illuminate\Contracts\Auth\Authenticatable to use, see
+    | LaravelOIDCAuth\UserFactoryInterface.
+    | For example, you can use a Eloquent model as Authenticatable to store
+    | user information in DB.
+    | A OpenIDConnectClient\AccessToken will be passed to authenticable()
+    |
+     */
+    'authenticatable_factory' => \LaravelOIDCAuth\UserFactory::class,
 ];
