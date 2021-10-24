@@ -20,11 +20,10 @@ class CallbackController extends Controller
         $token = $this->provider->getAccessToken('authorization_code', [
             'code' => $request->get('code'),
         ]);
-        $claims = $token->getIdToken()->getClaims();
 
-        session(['oidc-auth.claims' => $claims]);
+        session(['oidc-auth.access_token' => $token]);
 
-        Auth::login(new OIDCUser($claims));
+        Auth::login(new OIDCUser($token));
 
         return redirect()->intended();
     }

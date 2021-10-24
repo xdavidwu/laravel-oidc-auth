@@ -6,16 +6,16 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 class OIDCUser implements Authenticatable
 {
-    protected $claims;
+    protected $token;
 
-    public function __construct($claims)
+    public function __construct($token)
     {
-        $this->claims = $claims;
+        $this->token = $token;
     }
 
-    public function getClaims()
+    public function getAccessToken()
     {
-        return $this->claims;
+        return $this->token;
     }
 
     public function getAuthIdentifierName()
@@ -25,7 +25,7 @@ class OIDCUser implements Authenticatable
 
     public function getAuthIdentifier()
     {
-        return $this->claims['sub'];
+        return $this->token->getIdToken()->getClaim('sub');
     }
 
     public function getAuthPassword()
