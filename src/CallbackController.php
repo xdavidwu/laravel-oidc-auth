@@ -17,6 +17,10 @@ class CallbackController extends Controller
 
     public function callback(Request $request)
     {
+        if ($request->get('state') !== session('oidc-auth.state')) {
+            return response('state does not match', 400);
+        }
+
         $token = $this->provider->getAccessToken('authorization_code', [
             'code' => $request->get('code'),
         ]);

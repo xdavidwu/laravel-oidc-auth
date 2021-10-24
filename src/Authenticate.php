@@ -18,7 +18,9 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (!$request->expectsJson()) {
-            return $this->provider->getAuthorizationUrl();
+            $url = $this->provider->getAuthorizationUrl();
+            session()->flash('oidc-auth.state', $this->provider->getState());
+            return $url;
         }
     }
 }
