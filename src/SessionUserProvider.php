@@ -10,7 +10,10 @@ class SessionUserProvider implements UserProvider
     public function retrieveById($identifier)
     {
         if (session()->has('oidc-auth.access_token')) {
-            return new OIDCUser(session('oidc-auth.access_token'));
+            $user = new OIDCUser(session('oidc-auth.access_token'));
+            if ($user->getAuthIdentifier() === $identifier) {
+                return $user;
+            }
         }
     }
 
