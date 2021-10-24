@@ -19,15 +19,15 @@ class CallbackController extends Controller
     {
         $error = $request->get('error');
         if (!is_null($error)) {
-            return response('OIDC error: ' . $error, 400);
+            throw new AuthenticationErrorException($error);
         }
 
         if ($request->get('state') !== session('oidc-auth.state')) {
-            return response('state does not match', 400);
+            throw new InvalidStateException();
         }
 
         if (!$request->has('code')) {
-            return response('No authorization code received', 400);
+            throw new AuthenticationException('No authorization code received');
         }
         $token = $this->provider->getAccessToken('authorization_code', [
             'code' => $request->get('code'),
