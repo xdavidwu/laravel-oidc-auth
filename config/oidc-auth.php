@@ -10,6 +10,8 @@ return [
     | This options to pass to OpenIDConnectClient\OpenIDConnectProvider.
     | `redirectUri` will be determined automatically by `callback_route` below.
     | `urlResourceOwnerDetails` is unused by us.
+    | `publicKey` is in PEM format, either the content or `file://` to read
+    |  from file.
     |
      */
     'provider' => [

@@ -1,6 +1,6 @@
 {
     "name": "xdavidwu/laravel-oidc-auth",
-    "description": "OpenID Connect auth provider for Laravel",
+    "description": "OpenID Connect authentication for Laravel",
     "type": "library",
     "license": "MIT",
     "autoload": {
