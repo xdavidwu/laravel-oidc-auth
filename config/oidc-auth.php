@@ -9,6 +9,7 @@ return [
     |
     | This options to pass to OpenIDConnectClient\OpenIDConnectProvider.
     | `redirectUri` will be determined automatically by `callback_route` below.
+    | `urlResourceOwnerDetails` is unused by us.
     |
      */
     'provider' => [
