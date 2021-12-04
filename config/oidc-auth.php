@@ -57,6 +57,9 @@ return [
     | JWT claims in id_token required to authenticate. Arrays set required
     | elements in an array. Other values are matched exactly.
     |
+    | This can also be a Closure to check id_token. id_token will be passed as
+    | the first parameter. Return true to indicate a pass or false for a fail.
+    |
      */
     'required_claims' => [
         //'name' => 'value',

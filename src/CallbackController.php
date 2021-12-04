@@ -54,6 +54,10 @@ class CallbackController extends Controller
                     abort(403);
                 }
             }
+        } elseif ($required instanceof \Closure) {
+            if (!$required($token->getIdToken())) {
+                abort(403);
+            }
         }
 
         session(['oidc-auth.access_token' => $token]);
