@@ -33,6 +33,29 @@ class CallbackController extends Controller
             'code' => $request->get('code'),
         ]);
 
+        $required = config('oidc-auth.required_claims');
+        if (is_array($required)) {
+            $idToken = $token->getIdToken();
+            foreach ($required as $key => $value) {
+                if (!$idToken->hasClaim($key)) {
+                    abort(403);
+                }
+                $claim = $idToken->getClaim($key);
+
+                if (is_array($value)) {
+                    if (!is_array($claim)) {
+                        abort(403);
+                    }
+
+                    if (array_intersect($value, $claim) !== $value) {
+                        abort(403);
+                    }
+                } elseif ($claim !== $value) {
+                    abort(403);
+                }
+            }
+        }
+
         session(['oidc-auth.access_token' => $token]);
 
         $factory = app(config('oidc-auth.authenticatable_factory'));

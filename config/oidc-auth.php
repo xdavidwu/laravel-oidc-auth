@@ -48,4 +48,18 @@ return [
     |
      */
     'authenticatable_factory' => \LaravelOIDCAuth\UserFactory::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Required Claims
+    |--------------------------------------------------------------------------
+    |
+    | JWT claims in id_token required to authenticate. Arrays set required
+    | elements in an array. Other values are matched exactly.
+    |
+     */
+    'required_claims' => [
+        //'name' => 'value',
+        //'array' => ['required', 'elements'],
+    ],
 ];
