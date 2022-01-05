@@ -37,6 +37,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Register the default OIDC callback route
+    |--------------------------------------------------------------------------
+    |
+    | If you want to customize the callback route, set this option to false.
+    | Next, you can create your own route & controller to handle OIDC callback,
+    | and the route must be named as 'oidc-auth.callback'.
+    |
+     */
+    'register_default_callback_route' => true,
+
+    /*
+    |--------------------------------------------------------------------------
     | Authenticatable Factory
     |--------------------------------------------------------------------------
     |
