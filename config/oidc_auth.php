@@ -18,9 +18,9 @@ return [
         'clientId' => 'example',
         'clientSecret' => 'example',
         'idTokenIssuer' => 'example.com',
-        'urlAuthorize' => 'http://example.com/authorize',
-        'urlAccessToken' => 'http://example.com/token',
-        'urlResourceOwnerDetails' => 'http://example.com/owner',
+        'urlAuthorize' => 'https://example.com/authorize',
+        'urlAccessToken' => 'https://example.com/token',
+        'urlResourceOwnerDetails' => 'https://example.com/owner',
         'scopes' => ['openid'],
         'publicKey' => 'file:///key.pem',
     ],
@@ -30,7 +30,7 @@ return [
     | Callback Route
     |--------------------------------------------------------------------------
     |
-    | Callback route used by Authrization Code flow.
+    | Callback route used by Authorization Code flow.
     |
      */
     'callback_route' => '/oidc/callback',
