@@ -40,11 +40,11 @@ return [
     | Authenticatable Factory
     |--------------------------------------------------------------------------
     |
-    | Factory to get a Illuminate\Contracts\Auth\Authenticatable to use, see
-    | LaravelOIDCAuth\UserFactoryInterface.
-    | For example, you can use a Eloquent model as Authenticatable to store
+    | Factory to get an Illuminate\Contracts\Auth\OIDCAuthenticatable to use, see
+    | LaravelOIDCAuth\Contracts\OIDCAuthenticatableFactory.
+    | For example, you can use an Eloquent model as OIDCAuthenticatable to store
     | user information in DB.
-    | A OpenIDConnectClient\AccessToken will be passed to authenticable()
+    | A OpenIDConnectClient\AccessToken will be passed to authenticatable()
     |
      */
     'authenticatable_factory' => \LaravelOIDCAuth\UserFactory::class,
