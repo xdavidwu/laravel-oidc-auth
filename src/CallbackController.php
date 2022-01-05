@@ -2,70 +2,105 @@
 
 namespace LaravelOIDCAuth;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use OpenIDConnectClient\AccessToken;
 
 class CallbackController extends Controller
 {
-    protected $provider;
+    protected AuthorizationCodeFlowInterface $flow;
 
-    public function __construct(OIDCProviderService $service)
+    public function __construct(AuthorizationCodeFlowInterface $flow)
     {
-        $this->provider = $service->getProvider();
+        $this->flow = $flow;
     }
 
+    /**
+     * The entry for authentication success redirected
+     *
+     * This function will:
+     *  - get the token from request
+     *  - validate id token claims by config('oidc_auth.required_claims')
+     *  - make a OIDCAuthenticatableFactory as UserFactory
+     *  - make an Authenticatable as user
+     *  - login this user
+     *  - return a response
+     *
+     * @param Request $request
+     * @return mixed
+     * @throws \OpenIDConnectClient\Exception\InvalidTokenException
+     * @throws ValidationException
+     */
     public function callback(Request $request)
     {
-        $error = $request->get('error');
-        if (!is_null($error)) {
-            throw new AuthenticationErrorException($error);
-        }
+        $token = $this->flow->getAccessToken($request);
+        $this->validateRequiredClaims($token);
+        $user = app(config('oidc_auth.authenticatable_factory'))->authenticatable($token);
+        $this->loginUser($user);
 
-        if ($request->get('state') !== session('oidc-auth.state')) {
-            throw new InvalidStateException();
-        }
+        return $this->getCallbackResponse($request, $token, $user);
+    }
 
-        if (!$request->has('code')) {
-            throw new AuthenticationException('No authorization code received');
-        }
-        $token = $this->provider->getAccessToken('authorization_code', [
-            'code' => $request->get('code'),
-        ]);
-
+    /**
+     * Validate the id token claims
+     *
+     * @param AccessToken $token
+     * @return void
+     * @throws ValidationException
+     */
+    protected function validateRequiredClaims(AccessToken $token)
+    {
         $required = config('oidc-auth.required_claims');
         if (is_array($required)) {
             $idToken = $token->getIdToken();
             foreach ($required as $key => $value) {
                 if (!$idToken->hasClaim($key)) {
-                    abort(403);
+                    throw ValidationException::withMessages([$key => "The '$key' field is required."]);
                 }
                 $claim = $idToken->getClaim($key);
 
                 if (is_array($value)) {
                     if (!is_array($claim)) {
-                        abort(403);
+                        throw ValidationException::withMessages([$key => "The '$key' must be an array."]);
                     }
 
                     if (array_intersect($value, $claim) !== $value) {
-                        abort(403);
+                        throw ValidationException::withMessages([$key => "The '$key' is invalid."]);
                     }
                 } elseif ($claim !== $value) {
-                    abort(403);
+                    throw ValidationException::withMessages([$key => "The '$key' is invalid."]);
                 }
             }
         } elseif ($required instanceof \Closure) {
             if (!$required($token->getIdToken())) {
-                abort(403);
+                throw ValidationException::withMessages(['id_token' => "The id token is invalid."]);
             }
         }
+    }
 
-        session(['oidc-auth.access_token' => $token]);
+    /**
+     * Login the user
+     *
+     * @param Authenticatable $user
+     */
+    protected function loginUser(Authenticatable $user)
+    {
+        Auth::login($user, config('oidc_auth.auto_refresh', false));
+    }
 
-        $factory = app(config('oidc-auth.authenticatable_factory'));
-
-        Auth::login($factory->authenticatable($token));
-
+    /**
+     * Return a response for callback route, default version is redirect user to intended url
+     *
+     * @param Request $request
+     * @param AccessToken $token
+     * @param Authenticatable $user
+     * @return mixed
+     */
+    protected function getCallbackResponse(Request $request, AccessToken $token, Authenticatable $user)
+    {
         return redirect()->intended();
     }
 }

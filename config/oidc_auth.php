@@ -51,6 +51,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Auto Refresh
+    |--------------------------------------------------------------------------
+    |
+    | This option determines whether to refresh the access token automatically.
+    | This option is effective on \LaravelOIDCAuth\CallbackController.
+    |
+     */
+    'auto_refresh' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Required Claims
     |--------------------------------------------------------------------------
     |
