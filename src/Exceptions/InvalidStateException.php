@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelOIDCAuth;
+namespace LaravelOIDCAuth\Exceptions;
 
 class InvalidStateException extends AuthenticationException
 {

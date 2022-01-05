@@ -10,6 +10,9 @@ use LaravelOIDCAuth\Events\OIDCAuthenticationStarted;
 use LaravelOIDCAuth\Events\OIDCAuthorizationFailed;
 use LaravelOIDCAuth\Events\OIDCAuthorized;
 use LaravelOIDCAuth\Events\TokenRefreshed;
+use LaravelOIDCAuth\Exceptions\AuthenticationErrorException;
+use LaravelOIDCAuth\Exceptions\AuthenticationException;
+use LaravelOIDCAuth\Exceptions\InvalidStateException;
 use OpenIDConnectClient\AccessToken;
 use OpenIDConnectClient\OpenIDConnectProvider;
 
