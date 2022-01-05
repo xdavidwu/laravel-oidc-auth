@@ -2,40 +2,36 @@
 
 namespace LaravelOIDCAuth;
 
-use Illuminate\Contracts\Auth\Authenticatable;
+use LaravelOIDCAuth\Contracts\OIDCAuthenticatable;
+use OpenIDConnectClient\AccessToken;
 
-class OIDCUser implements Authenticatable
+class OIDCUser implements OIDCAuthenticatable
 {
-    protected $token;
+    use HasAccessToken, RefreshesAccessToken;
 
-    public function __construct($token)
+    public function __construct(AccessToken $token)
     {
-        $this->token = $token;
+        $this->accessToken = $token;
     }
 
-    public function getAccessToken()
-    {
-        return $this->token;
-    }
-
-    public function getAuthIdentifierName()
+    public function getAuthIdentifierName(): string
     {
         return 'sub';
     }
 
     public function getAuthIdentifier()
     {
-        return $this->token->getIdToken()->getClaim('sub');
+        return $this->accessToken->getIdToken()->getClaim('sub');
     }
 
-    public function getAuthPassword()
+    public function getAuthPassword(): string
     {
         throw new \LogicException('Not applicable for OIDC auth.');
     }
 
-    public function getRememberToken()
+    public function getRememberToken(): string
     {
-        return [];
+        return '';
     }
 
     public function setRememberToken($value)
@@ -43,7 +39,7 @@ class OIDCUser implements Authenticatable
         throw new \LogicException('Not implemented.');
     }
 
-    public function getRememberTokenName()
+    public function getRememberTokenName(): string
     {
         throw new \LogicException('Not implemented.');
     }
