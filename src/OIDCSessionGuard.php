@@ -153,7 +153,7 @@ class OIDCSessionGuard implements Guard
      * Log a user into the application.
      *
      * @param Authenticatable $user
-     * @param bool $remember
+     * @param bool $remember if $remember is true, the access token will be refreshed automatically.
      * @return void
      */
     public function login(Authenticatable $user, bool $remember = false)
