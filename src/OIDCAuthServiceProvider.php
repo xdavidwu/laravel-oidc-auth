@@ -20,7 +20,7 @@ class OIDCAuthServiceProvider extends ServiceProvider
             __DIR__ . '/../config/oidc_auth.php' => config_path('oidc_auth.php'),
         ]);
         if (config('oidc_auth.register_default_callback_route', true)) {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/oidc-auth.php');
+            $this->loadRoutesFrom(__DIR__ . '/../routes/oidc_auth.php');
         }
 
         $this->app->bind(OpenIDConnectProvider::class, function ($app) {
