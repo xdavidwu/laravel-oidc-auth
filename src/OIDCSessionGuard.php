@@ -153,28 +153,28 @@ class OIDCSessionGuard implements Guard
      * Log a user into the application.
      *
      * @param Authenticatable $user
-     * @param bool $remember if $remember is true, the access token will be refreshed automatically.
+     * @param bool $auto_refresh if $auto_refresh is true, the access token will be refreshed automatically.
      * @return void
      */
-    public function login(Authenticatable $user, bool $remember = false)
+    public function login(Authenticatable $user, bool $auto_refresh = false)
     {
-        $this->fireLoginEvent($user, $remember);
+        $this->fireLoginEvent($user, $auto_refresh);
         $this->setUser($user);
-        $this->setAutoRefresh($remember);
+        $this->setAutoRefresh($auto_refresh);
     }
 
     /**
      * Fire the login event if the dispatcher is set.
      *
      * @param Authenticatable $user
-     * @param bool $remember
+     * @param bool $auto_refresh
      * @return void
      */
-    protected function fireLoginEvent(Authenticatable $user, bool $remember = false)
+    protected function fireLoginEvent(Authenticatable $user, bool $auto_refresh = false)
     {
         if (isset($this->events)) {
             $this->events->dispatch(new Login(
-                $this->name, $user, $remember
+                $this->name, $user, $auto_refresh
             ));
         }
     }
