@@ -19,7 +19,7 @@ class OIDCAuthenticationStarted
     public string $authorizationUrl;
 
     /**
-     * @var string Opaque value used to maintain state between the request and the callback.
+     * @var string See: https://openid.net/specs/openid-connect-core-1_0.html#rfc.section.3.1.2.1
      */
     public string $state;
 

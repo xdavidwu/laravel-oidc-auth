@@ -52,7 +52,7 @@ return [
     | Authenticatable Factory
     |--------------------------------------------------------------------------
     |
-    | Factory to get an Illuminate\Contracts\Auth\OIDCAuthenticatable to use, see
+    | Factory to get an \LaravelOIDCAuth\Contracts\OIDCAuthenticatable to use, see
     | LaravelOIDCAuth\Contracts\OIDCAuthenticatableFactory.
     | For example, you can use an Eloquent model as OIDCAuthenticatable to store
     | user information in DB.
