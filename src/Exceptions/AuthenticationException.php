@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelOIDCAuth;
+namespace LaravelOIDCAuth\Exceptions;
 
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
@@ -15,12 +15,12 @@ class AuthenticationException extends \RuntimeException implements HttpException
         parent::__construct($message);
     }
 
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->code;
     }
 
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return [];
     }

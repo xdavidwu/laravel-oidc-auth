@@ -18,9 +18,9 @@ return [
         'clientId' => 'example',
         'clientSecret' => 'example',
         'idTokenIssuer' => 'example.com',
-        'urlAuthorize' => 'http://example.com/authorize',
-        'urlAccessToken' => 'http://example.com/token',
-        'urlResourceOwnerDetails' => 'http://example.com/owner',
+        'urlAuthorize' => 'https://example.com/authorize',
+        'urlAccessToken' => 'https://example.com/token',
+        'urlResourceOwnerDetails' => 'https://example.com/owner',
         'scopes' => ['openid'],
         'publicKey' => 'file:///key.pem',
     ],
@@ -30,24 +30,47 @@ return [
     | Callback Route
     |--------------------------------------------------------------------------
     |
-    | Callback route used by Authrization Code flow.
+    | Callback route used by Authorization Code flow.
     |
      */
     'callback_route' => '/oidc/callback',
 
     /*
     |--------------------------------------------------------------------------
+    | Register the default OIDC callback route
+    |--------------------------------------------------------------------------
+    |
+    | If you want to customize the callback route, set this option to false.
+    | Next, you can create your own route & controller to handle OIDC callback,
+    | and the route must be named as 'oidc-auth.callback'.
+    |
+     */
+    'register_default_callback_route' => true,
+
+    /*
+    |--------------------------------------------------------------------------
     | Authenticatable Factory
     |--------------------------------------------------------------------------
     |
-    | Factory to get a Illuminate\Contracts\Auth\Authenticatable to use, see
-    | LaravelOIDCAuth\UserFactoryInterface.
-    | For example, you can use a Eloquent model as Authenticatable to store
+    | Factory to get an \LaravelOIDCAuth\Contracts\OIDCAuthenticatable to use, see
+    | LaravelOIDCAuth\Contracts\OIDCAuthenticatableFactory.
+    | For example, you can use an Eloquent model as OIDCAuthenticatable to store
     | user information in DB.
-    | A OpenIDConnectClient\AccessToken will be passed to authenticable()
+    | A OpenIDConnectClient\AccessToken will be passed to authenticatable()
     |
      */
     'authenticatable_factory' => \LaravelOIDCAuth\UserFactory::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auto Refresh
+    |--------------------------------------------------------------------------
+    |
+    | This option determines whether to refresh the access token automatically.
+    | This option is effective on \LaravelOIDCAuth\CallbackController.
+    |
+     */
+    'auto_refresh' => false,
 
     /*
     |--------------------------------------------------------------------------
