@@ -52,8 +52,6 @@ class OIDCSessionGuard implements Guard
                 $this->fireAuthenticatedEvent($this->user);
             }
             return $this->user;
-        } else {
-            $this->clearSession();
         }
         return null;
     }
