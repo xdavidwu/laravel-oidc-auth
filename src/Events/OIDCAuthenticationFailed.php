@@ -16,7 +16,7 @@ class OIDCAuthenticationFailed
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @var Request|null The request returned by OpenID Provider after authorization redirected
+     * @var Request|null The request returned by OpenID Connect Provider after authorization redirected
      */
     public ?Request $callbackRequest;
 

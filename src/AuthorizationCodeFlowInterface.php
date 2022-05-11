@@ -17,7 +17,7 @@ interface AuthorizationCodeFlowInterface
     public function redirectToAuthorize(): RedirectResponse;
 
     /**
-     * After the OpenID provider returned an Authentication Response, call this function with Request
+     * After the OpenID Connect provider returned an Authentication Response, call this function with Request
      * will get access token
      *
      * @param Request $callbackRequest
