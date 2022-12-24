@@ -65,4 +65,21 @@ return [
         //'name' => 'value',
         //'array' => ['required', 'elements'],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Redirect URL after Authentication
+    |--------------------------------------------------------------------------
+    |
+    | The callback route, after successful authentication, redirects user to
+    | previously intended location. This is set when user is redirected from
+    | Authenticate middleware of Laravel and this library.
+    |
+    | This config sets the default URL when the intended URL was not set, which
+    | may happen, like, when you, instead of using Authenticate middleware of
+    | this library, build an intermediate login page that leads the user to
+    | OIDC Authorization Endpoint, and user manually visit that login page.
+    |
+     */
+    'default_redirect_after_auth' => '/',
 ];

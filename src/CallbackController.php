@@ -66,6 +66,8 @@ class CallbackController extends Controller
 
         Auth::login($factory->authenticatable($token));
 
-        return redirect()->intended();
+        return redirect()->intended(
+            config('oidc-auth.default_redirect_after_auth') ?? '/'
+        );
     }
 }
