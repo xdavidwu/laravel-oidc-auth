@@ -25,7 +25,7 @@ class OIDCUser implements Authenticatable
 
     public function getAuthIdentifier()
     {
-        return $this->token->getIdToken()->getClaim('sub');
+        return $this->token->getIdToken()->claims()->get('sub');
     }
 
     public function getAuthPassword()

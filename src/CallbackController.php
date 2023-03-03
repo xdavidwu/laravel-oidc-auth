@@ -35,12 +35,12 @@ class CallbackController extends Controller
 
         $required = config('oidc-auth.required_claims');
         if (is_array($required)) {
-            $idToken = $token->getIdToken();
+            $claims = $token->getIdToken()->claims();
             foreach ($required as $key => $value) {
-                if (!$idToken->hasClaim($key)) {
+                if (!$claims->has($key)) {
                     abort(403);
                 }
-                $claim = $idToken->getClaim($key);
+                $claim = $claims()->get($key);
 
                 if (is_array($value)) {
                     if (!is_array($claim)) {
