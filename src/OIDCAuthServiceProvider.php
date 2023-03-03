@@ -19,7 +19,9 @@ class OIDCAuthServiceProvider extends ServiceProvider
         });
         Auth::extend('oidc-auth-session', function ($app, $name, array $config) {
             $provider = Auth::createUserProvider($config['provider'] ?? null);
-            return new SessionGuard($name, $provider, $app['session.store']);
+            $guard = new SessionGuard($name, $provider, $app['session.store']);
+            $guard->setCookieJar($this->app['cookie']);
+            return $guard;
         });
     }
 
