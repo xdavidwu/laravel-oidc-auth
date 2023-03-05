@@ -40,7 +40,7 @@ class CallbackController extends Controller
                 if (!$claims->has($key)) {
                     abort(403);
                 }
-                $claim = $claims()->get($key);
+                $claim = $claims->get($key);
 
                 if (is_array($value)) {
                     if (!is_array($claim)) {
