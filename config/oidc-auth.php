@@ -80,6 +80,11 @@ return [
     | this library, build an intermediate login page that leads the user to
     | OIDC Authorization Endpoint, and user manually visit that login page.
     |
+    | DEPRECATED: Just link to an auth-protected page on the intermediate page
+    | instead of building OIDC Authrization Endpoint URL, and let the auth
+    | middleware do the work for you as usual. Adds an extra round-trip but
+    | simplifies consumer code.
+    |
      */
     'default_redirect_after_auth' => '/',
 ];

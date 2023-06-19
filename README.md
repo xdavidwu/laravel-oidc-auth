@@ -10,7 +10,7 @@ Based on steverhoades/oauth2-openid-connect-client.
 
 Publish config with artisan command `vender:publish` for provider `LaravelOIDCAuth\OIDCAuthServiceProvider`, and fill it.
 
-Use `LaravelOIDCAuth\Authenticate` as auth middleware to redirect directly to OIDC login automatically. Alternatively, you can get login url by yourself and store state string into session storage `oidc-auth.state`, see that middleware.
+Use `LaravelOIDCAuth\Authenticate` as auth middleware to redirect directly to OIDC login automatically.
 
 ### `config/auth.php`
 
