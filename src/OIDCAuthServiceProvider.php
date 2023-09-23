@@ -15,7 +15,7 @@ class OIDCAuthServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/oidc-auth.php');
 
         Auth::provider('oidc-auth-session', function ($app, array $config) {
-            return new SessionUserProvider();
+            return app(SessionUserProvider::class);
         });
         Auth::extend('oidc-auth-session', function ($app, $name, array $config) {
             $provider = Auth::createUserProvider($config['provider'] ?? null);

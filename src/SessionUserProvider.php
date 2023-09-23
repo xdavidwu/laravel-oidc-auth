@@ -7,10 +7,17 @@ use Illuminate\Contracts\Auth\UserProvider;
 
 class SessionUserProvider implements UserProvider
 {
+    protected $oidcService;
+
+    public function __construct(OIDCService $service)
+    {
+        $this->oidcService = $service;
+    }
+
     public function retrieveById($identifier)
     {
-        if (session()->has('oidc-auth.access_token')) {
-            $user = new OIDCUser(session('oidc-auth.access_token'));
+        if ($token = $this->oidcService->getStoredToken()) {
+            $user = new OIDCUser($token);
             if ($user->getAuthIdentifier() === $identifier) {
                 return $user;
             }

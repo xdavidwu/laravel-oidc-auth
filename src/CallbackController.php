@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class CallbackController extends Controller
 {
+    protected $oidcService;
     protected $provider;
 
     public function __construct(OIDCService $service)
     {
+        $this->oidcService = $service;
         $this->provider = $service->getProvider();
     }
 
@@ -60,7 +62,7 @@ class CallbackController extends Controller
             }
         }
 
-        session(['oidc-auth.access_token' => $token]);
+        $this->oidcService->storeToken($token);
 
         $factory = app(config('oidc-auth.authenticatable_factory'));
 

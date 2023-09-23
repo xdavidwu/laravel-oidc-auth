@@ -9,6 +9,6 @@ class SessionGuard extends BaseGuard
     public function logout()
     {
         parent::logout();
-        session()->forget('oidc-auth.access_token');
+        app(OIDCService::class)->clearToken();
     }
 }
