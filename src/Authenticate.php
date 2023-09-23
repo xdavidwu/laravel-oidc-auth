@@ -9,7 +9,7 @@ class Authenticate extends Middleware
 {
     protected $provider;
 
-    public function __construct(Auth $auth, OIDCProviderService $service)
+    public function __construct(Auth $auth, OIDCService $service)
     {
         $this->provider = $service->getProvider();
         parent::__construct($auth);

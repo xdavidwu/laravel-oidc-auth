@@ -10,7 +10,7 @@ class CallbackController extends Controller
 {
     protected $provider;
 
-    public function __construct(OIDCProviderService $service)
+    public function __construct(OIDCService $service)
     {
         $this->provider = $service->getProvider();
     }

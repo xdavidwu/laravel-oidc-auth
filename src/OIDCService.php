@@ -5,7 +5,7 @@ namespace LaravelOIDCAuth;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use OpenIDConnectClient\OpenIDConnectProvider;
 
-class OIDCProviderService
+class OIDCService
 {
     protected $signer;
     protected $provider;
