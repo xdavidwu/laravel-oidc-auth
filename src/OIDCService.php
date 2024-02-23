@@ -8,6 +8,7 @@ use OpenIDConnectClient\OpenIDConnectProvider;
 class OIDCService
 {
     protected const TOKEN_SESSION_KEY = 'oidc-auth.access_token';
+    protected const STATE_SESSION_KEY = 'oidc-auth.state';
 
     protected $signer;
     protected $provider;
@@ -27,6 +28,18 @@ class OIDCService
     public function getProvider()
     {
         return $this->provider;
+    }
+
+    public function getState()
+    {
+        return session(self::STATE_SESSION_KEY);
+    }
+
+    public function buildAuthorizationUrl()
+    {
+        $url = $this->provider->getAuthorizationUrl();
+        session()->flash(self::STATE_SESSION_KEY, $this->provider->getState());
+        return $url;
     }
 
     public function storeToken($token)

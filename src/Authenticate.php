@@ -7,20 +7,18 @@ use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
-    protected $provider;
+    protected $oidcService;
 
     public function __construct(Auth $auth, OIDCService $service)
     {
-        $this->provider = $service->getProvider();
+        $this->oidcService = $service;
         parent::__construct($auth);
     }
 
     protected function redirectTo($request)
     {
         if (!$request->expectsJson()) {
-            $url = $this->provider->getAuthorizationUrl();
-            session()->flash('oidc-auth.state', $this->provider->getState());
-            return $url;
+            return $this->oidcService->buildAuthorizationUrl();
         }
     }
 }

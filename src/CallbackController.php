@@ -24,7 +24,7 @@ class CallbackController extends Controller
             throw new AuthenticationErrorException($error);
         }
 
-        if ($request->get('state') !== session('oidc-auth.state')) {
+        if ($request->get('state') !== $this->oidcService->getState()) {
             throw new InvalidStateException();
         }
 
