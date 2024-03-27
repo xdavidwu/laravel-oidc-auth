@@ -33,6 +33,11 @@ class OIDCUser implements Authenticatable
         throw new \LogicException('Not applicable for OIDC auth.');
     }
 
+    public function getAuthPasswordName()
+    {
+        throw new \LogicException('Not applicable for OIDC auth.');
+    }
+
     public function getRememberToken()
     {
         return [];
