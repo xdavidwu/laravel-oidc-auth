@@ -43,4 +43,9 @@ class SessionUserProvider implements UserProvider
     {
         throw new \LogicException('Not applicable for OIDC auth.');
     }
+
+    public function rehashPasswordIfRequired(Authenticatable $user, array $credentials, bool $force = false)
+    {
+        throw new \LogicException('Not applicable for OIDC auth.');
+    }
 }
