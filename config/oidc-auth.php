@@ -57,13 +57,13 @@ return [
     | JWT claims in id_token required to authenticate. Arrays set required
     | elements in an array. Other values are matched exactly.
     |
-    | This can also be a Closure to check id_token. id_token will be passed as
-    | the first parameter. Return true to indicate a pass or false for a fail.
+    | You can provide a \Closure or \Laravel\SerializableClosure\SerializableClosure that accepts id_token as its argument to perform customized validation. Return true to indicate a pass or false for a fail. 
+    | When passing SerializableClosure, `APP_KEY` environment variable is used to sign and verify the serialized data.
     |
      */
     'required_claims' => [
-        //'name' => 'value',
-        //'array' => ['required', 'elements'],
+        // 'name' => 'value',
+        // 'array' => ['required', 'elements'],
     ],
 
     /*
