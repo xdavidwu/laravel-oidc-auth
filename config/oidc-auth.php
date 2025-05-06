@@ -57,14 +57,24 @@ return [
     | JWT claims in id_token required to authenticate. Arrays set required
     | elements in an array. Other values are matched exactly.
     |
-    | This can also be a Closure to check id_token. id_token will be passed as
-    | the first parameter. Return true to indicate a pass or false for a fail.
+    | For customized validation rules, supply a \Closure that takes id_token as
+    | its input, and returns true for successful validation, false for failure.
+    | 
+    | When caching the config with artisan, wrap the closure in a serialized 
+    | \Laravel\SerializableClosure\SerializableClosure instance. Be sure to set
+    | secret key via `SerializableClosure::setSecretKey(config("app.key"));`
     |
      */
     'required_claims' => [
-        //'name' => 'value',
-        //'array' => ['required', 'elements'],
+        // 'name' => 'value',
+        // 'array' => ['required', 'elements'],
     ],
+    // Provide custom validation logic with a Closure
+    // 'required_claims' => fn ($claims) =>
+    //     $claims->has('name') && $claims->get('name') === 'value',
+    // In case you need to cache the config, make the closure serializable
+    // 'required_claims' => serialize(new SerializableClosure(
+    //     fn ($claims) => $claims->has('name') && $claims->get('name') === 'value')),
 
     /*
     |--------------------------------------------------------------------------

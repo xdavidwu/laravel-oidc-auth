@@ -2,13 +2,17 @@
 
 namespace LaravelOIDCAuth;
 
+use Closure;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Laravel\SerializableClosure\SerializableClosure;
 
 class CallbackController extends Controller
 {
     protected $oidcService;
+
     protected $provider;
 
     public function __construct(OIDCService $service)
@@ -36,6 +40,7 @@ class CallbackController extends Controller
         ]);
 
         $required = config('oidc-auth.required_claims');
+
         if (is_array($required)) {
             $claims = $token->getIdToken()->claims();
             foreach ($required as $key => $value) {
@@ -56,9 +61,33 @@ class CallbackController extends Controller
                     abort(403);
                 }
             }
-        } elseif ($required instanceof \Closure) {
-            if (!$required($token->getIdToken())) {
-                abort(403);
+        } else {
+            // attempt to get serialized closure first
+            if (is_string($required)) {
+                SerializableClosure::setSecretKey(config('app.key'));
+                $unserialized = unserialize($required);
+
+                if (!$unserialized instanceof SerializableClosure) {
+                    throw new Exception("Expect unserialized object to have type "
+                        .SerializableClosure::class
+                        .", got "
+                        .get_class($unserialized)
+                        .". It is probably a misconfiguration.");
+                }
+                $required = $unserialized->getClosure();
+            }
+
+            if ($required instanceof Closure) {
+                if (!$required($token->getIdToken())) {
+                    abort(403);
+                }
+            } else {
+                throw new Exception(
+                    "Expect required_claims to be array, \Closure, or"
+                    .SerializableClosure::class
+                    .", got "
+                    .gettype($required)
+                    .". It is probably a misconfiguration.");
             }
         }
 
