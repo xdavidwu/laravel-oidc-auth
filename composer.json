@@ -16,7 +16,7 @@
     ],
     "require": {
         "steverhoades/oauth2-openid-connect-client": "^2.0",
-        "laravel/framework": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+        "laravel/framework": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
         "laravel/serializable-closure": "^1.3"
     },
     "extra": {
